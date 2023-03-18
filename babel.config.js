@@ -3,4 +3,14 @@ module.exports = {
   //plugins: [
   //  'react-native-reanimated/plugin',
   //],
+  plugins: [
+    [
+      'module-resolver',
+      {
+        alias: {
+          '@app': './src',
+        },
+      },
+    ],
+  ],
 };
