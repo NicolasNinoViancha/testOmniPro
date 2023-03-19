@@ -1,1 +1,1 @@
-export { default as CustomTap } from './CustomTap';
+export { default as CustomTab } from './CustomTab';
