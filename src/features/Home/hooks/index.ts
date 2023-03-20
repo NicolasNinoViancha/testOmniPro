@@ -1,1 +1,1 @@
-export * from './useFecth';
+export { default as useFecth } from './useFecth';
