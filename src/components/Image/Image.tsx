@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Image as RNImage, Platform } from 'react-native';
 //additional libraries
 import FastImage from 'react-native-fast-image';
 //additional components
@@ -30,15 +30,24 @@ const Image = ({
                     color={COLORS.gray} />
             </View>
         );
+    if (Platform.OS === 'ios')
+        return (
+            <FastImage
+                testID={'componentFastImage'}
+                onError={onError}
+                style={styles.container}
+                source={{
+                    uri: source,
+                    priority: FastImage.priority.normal,
+                }}
+                resizeMode={resizeMode} />
+        );
     return (
-        <FastImage
-            testID={'componentFastImage'}
+        <RNImage
+            testID={'componentImage'}
             onError={onError}
             style={styles.container}
-            source={{
-                uri: source,
-                priority: FastImage.priority.normal,
-            }}
+            source={{ uri: source }}
             resizeMode={resizeMode} />
     );
 };
