@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { COLORS } from '@app/theme';
 
 const { width, height } = Dimensions.get('window');
 
@@ -12,7 +13,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         overflow: 'hidden',
         flexDirection: 'row',
-        borderColor: '#FAFAFA',
+        backgroundColor: COLORS.white,
+        borderColor: COLORS.grayLight,
         borderTopWidth: 2,
     }
 })
