@@ -34,7 +34,6 @@ const CustomTab = ({
                         if (!isFocused && !event.defaultPrevented)
                             navigation.navigate(route?.name);
                     };
-                console.log({ icon, name: route?.name })
                 return (
                     <ButtonTap
                         key={`buttonTap_${i}`}
