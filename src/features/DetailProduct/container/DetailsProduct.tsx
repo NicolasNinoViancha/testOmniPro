@@ -1,26 +1,15 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, ScrollView, ActivityIndicator, Text } from 'react-native';
 //additional components
-import { Image } from '@app/components';
-import { Rating } from '../components';
+import { SectionContent } from '../components';
+import { ButtonRefetch } from '@app/components';
+//custom hooks
+import { useFecth } from '@app/features/DetailProduct/hooks';
 //models
 import { PropsDetailProduct } from '../models';
-import { StoreItem } from 'src/models';
 //styles
 import { styles } from '../styles';
-//mock data
-const data: StoreItem = {
-    "id": 20,
-    "title": "DANVOUY Womens T Shirt Casual Cotton Short",
-    "price": 12.99,
-    "description": "95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.",
-    "category": "women's clothing",
-    "image": "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg",
-    "rating": {
-        "rate": 3.6,
-        "count": 145
-    }
-}
+import { COLORS } from '@app/theme';
 //component
 const DetailProduct = ({
     navigation,
@@ -28,32 +17,47 @@ const DetailProduct = ({
 }: PropsDetailProduct) => {
     //recep params
     const { idProduct } = route.params;
+    //custom hooks
+    const {
+        data,
+        loading,
+        error,
+        refetch
+    } = useFecth(idProduct);
     //main component
+    if (loading)
+        return (
+            <View style={styles.container}>
+                <View style={styles.ctnLoading}>
+                    <ActivityIndicator
+                        size="large"
+                        color={COLORS.black} />
+                    <Text style={styles.textLoading}>
+                        {`Cargando...`}
+                    </Text>
+                </View>
+            </View>
+        );
+    if (error)
+        return (
+            <View style={styles.container}>
+                <ButtonRefetch
+                    testID='componentButtonRefetch'
+                    onPress={() => refetch(idProduct)} />
+            </View>
+        );
     return (
         <View style={styles.container}>
-            <View style={styles.ctnImage}>
-                <Image
-                    resizeMode={'contain'}
-                    source={data.image} />
-            </View>
-            <View style={styles.ctnInfo}>
-                <Text style={[styles.title]}>
-                    {data.title}
-                </Text>
-                <Text style={styles.description}>
-                    {data.description}
-                </Text>
-                <View style={styles.ctnRating}>
-                    <Text style={styles.rating}>
-                        {`${data.rating.rate}`}
-                    </Text>
-                    <Rating
-                        rating={Math.floor(data.rating.rate)} />
-                </View>
-                <Text style={styles.price}>
-                    {`$ ${data.price}`}
-                </Text>
-            </View>
+            <ScrollView
+                showsVerticalScrollIndicator={false}>
+                <SectionContent
+                    testID='componentSectionContent'
+                    image={data?.image || ''}
+                    title={data?.title}
+                    description={data?.description}
+                    rating={data?.rating.rate}
+                    price={data?.price} />
+            </ScrollView>
         </View>
     )
 };
