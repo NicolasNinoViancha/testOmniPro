@@ -1,0 +1,1 @@
+export const MSM = `A continuacion encontrara un formulario para el envio de dudas o sugerencias de la aplicacion.\n Aun no se configura ningun endpoint`;
