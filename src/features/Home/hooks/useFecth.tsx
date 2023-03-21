@@ -11,8 +11,9 @@ const useFecth = (endPoint?: string) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
-    const [limit, setLimit] = useState<number>(LIMIT);
+    const [limit, setLimit] = useState<number>(2);
     const [isAll, setIsAll] = useState<boolean>(false);
+    const [isFirstLoading, setIsFirstLoading] = useState<boolean>(false);
     //functions
     //description : handle event get store items
     const refetch = async (endPoint?: string) => {
@@ -22,6 +23,7 @@ const useFecth = (endPoint?: string) => {
             const response = await fetch(`${API_URL}${endPoint ? endPoint : `?limit=${LIMIT}`}`);
             const resJson = await response.json();
             setData(resJson);
+            !isFirstLoading && setIsFirstLoading(true);
         } catch (error) {
             setError(true);
         } finally {
@@ -30,15 +32,16 @@ const useFecth = (endPoint?: string) => {
     }
     //description : handle event fecht more
     const fetchMore = async () => {
-        const verifyIsAll = isAll;
-        if (verifyIsAll)
+        const verify = isAll || isLoadingMore || !isFirstLoading;
+        if (verify)
             return;
         setIsLoadingMore(true);
         setError(false);
+        console.log('fetchMore');
         try {
             const response = await fetch(`${API_URL}?limit=${LIMIT * limit}`);
             const resJson = await response.json();
-            const newItems = resJson.slice(LIMIT * limit - limit, LIMIT * limit),
+            const newItems = resJson.slice(LIMIT * (limit - 1), LIMIT * limit),
                 verify = newItems.length === 0;
             setIsAll(verify);
             if (verify)
