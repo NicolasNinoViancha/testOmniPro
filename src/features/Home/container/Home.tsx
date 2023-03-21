@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { FlatList, SafeAreaView } from 'react-native';
+import { FlatList, SafeAreaView, View } from 'react-native';
 //additional components
 import { CardProduct, ListEmptyComponent, ListFooterComponent } from '../components';
 //custom hooks
@@ -17,12 +17,12 @@ const Home = ({ navigation }: PropsHome) => {
         loading,
         isLoadingMore,
         error,
-        //fetchMore,
+        fetchMore,
         refetch
     } = useFecth();
     const {
-        data: dataAll,
-        loading: loadingAll
+        data: dataAllItems,
+        loading: loadingAllItems
     } = useFecth('?limit=100');
     const {
         data: categories,
@@ -31,15 +31,9 @@ const Home = ({ navigation }: PropsHome) => {
     } = useFecth('/categories');
     //states
     const [input, setInput] = useState<string>();
-    const [selectCategories, setSelectCategories] = useState<string[]>([]);
     //functions
-    const handleSelectCategories = (value: string[]) => {
-        setSelectCategories(value);
-        const verify = value.length === 0;
-        if (verify)
-            return refetch();
-        refetch(`/category/${value[0]}`);
-    }
+    const handleFetchMore = () => fetchMore();
+    //const handleFetchMore = () => console.log('carga adicional');
     //main component
     return (
         <SafeAreaView style={styles.container}>
@@ -53,6 +47,8 @@ const Home = ({ navigation }: PropsHome) => {
                 data={(loading || error)
                     ? []
                     : data}
+                onEndReachedThreshold={0.9}
+                onEndReached={handleFetchMore}
                 keyExtractor={(item, index) => `item_${item.id}`}
                 renderItem={({ item, index }) => (
                     <CardProduct
