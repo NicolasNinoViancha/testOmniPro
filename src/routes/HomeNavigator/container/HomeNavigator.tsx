@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeScreen } from '@app/screens';
+import { HomeScreen, ContactScreen } from '@app/screens';
 //additional components
 import { CustomTab } from '../components';
 
@@ -16,7 +16,10 @@ const HomeNavigator = () => {
                 component={HomeScreen} />
             <Tab.Screen
                 name="Contact"
-                component={HomeScreen} />
+                options={{
+                    headerTitle: 'Contacto'
+                }}
+                component={ContactScreen} />
         </Tab.Navigator>
     );
 }
