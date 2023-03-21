@@ -1,24 +1,31 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeScreen } from '@app/screens';
+import { createStackNavigator } from '@react-navigation/stack';
+import { DetailProductScreen } from '@app/screens';
 //additional components
-import { CustomTab } from '../components';
+import { HeaderBackImage } from '../components';
 import HomeNavigator from '../../HomeNavigator/container';
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const MainNavigator = () => {
     return (
-        <Tab.Navigator tabBar={props => <CustomTab {...props} />}>
-            <Tab.Screen
-                name="Home"
+        <Stack.Navigator>
+            <Stack.Screen
+                name="HomeApp"
                 options={{
                     headerShown: false
                 }}
                 component={HomeNavigator} />
-            <Tab.Screen
-                name="Contact"
-                component={HomeScreen} />
-        </Tab.Navigator>
+            <Stack.Screen
+                name="DetailProduct"
+                options={{
+                    headerShown: true,
+                    headerTitle: 'Detalles de producto',
+                    headerBackTitle: ' ',
+                    headerBackImage: () => <HeaderBackImage />
+                }}
+                //@ts-ignore
+                component={DetailProductScreen} />
+        </Stack.Navigator>
     );
 }
 

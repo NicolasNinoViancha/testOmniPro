@@ -1,35 +1,23 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import { HomeScreen, DetailProductScreen } from '@app/screens';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { HomeScreen } from '@app/screens';
+//additional components
+import { CustomTab } from '../components';
 
-import { HeaderBackImage } from '../components';
-
-type RootStackParamList = {
-    HomeApp: undefined;
-    DetailProduct: { idProduct: string };
-};
-
-const Stack = createStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator();
 
 const HomeNavigator = () => {
     return (
-        <Stack.Navigator>
-            <Stack.Screen
-                name="HomeApp"
+        <Tab.Navigator tabBar={props => <CustomTab {...props} />}>
+            <Tab.Screen
+                name="Home"
                 options={{
                     headerShown: false
                 }}
                 component={HomeScreen} />
-            <Stack.Screen
-                name="DetailProduct"
-                options={{
-                    headerShown: true,
-                    headerTitle: 'Detalles de producto',
-                    headerBackTitle: ' ',
-                    headerBackImage: () => <HeaderBackImage />
-                }}
-                //@ts-ignore
-                component={DetailProductScreen} />
-        </Stack.Navigator>
+            <Tab.Screen
+                name="Contact"
+                component={HomeScreen} />
+        </Tab.Navigator>
     );
 }
 

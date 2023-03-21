@@ -1,1 +1,1 @@
-export { default as CustomTab } from './CustomTab';
+export { default as HeaderBackImage } from './HeaderBackImage';
