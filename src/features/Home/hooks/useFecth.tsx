@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { StoreItem } from 'src/models';
 //constant
 const API_URL = 'https://fakestoreapi.com/products';
-const LIMIT = 10;
+const LIMIT = 15;
 //hook
 const useFecth = (endPoint?: string) => {
     //states
@@ -35,9 +35,9 @@ const useFecth = (endPoint?: string) => {
         const verify = isAll || isLoadingMore || !isFirstLoading;
         if (verify)
             return;
+        console.log('fetchMore')
         setIsLoadingMore(true);
         setError(false);
-        console.log('fetchMore');
         try {
             const response = await fetch(`${API_URL}?limit=${LIMIT * limit}`);
             const resJson = await response.json();

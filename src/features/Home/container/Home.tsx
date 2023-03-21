@@ -20,20 +20,15 @@ const Home = ({ navigation }: PropsHome) => {
         fetchMore,
         refetch
     } = useFecth();
-    const {
-        data: dataAllItems,
-        loading: loadingAllItems
-    } = useFecth('?limit=100');
-    const {
-        data: categories,
-        loading: loadingCategories,
-        error: errorCategories
-    } = useFecth('/categories');
+    //const {
+    //    data: dataAllItems,
+    //    loading: loadingAllItems
+    //} = useFecth('?limit=100');
     //states
     const [input, setInput] = useState<string>();
     //functions
-    const handleFetchMore = () => fetchMore();
-    //const handleFetchMore = () => console.log('carga adicional');
+    const handleFetchMore = async () => await fetchMore();
+    console.log({ longuitud: data.length });
     //main component
     return (
         <SafeAreaView style={styles.container}>
